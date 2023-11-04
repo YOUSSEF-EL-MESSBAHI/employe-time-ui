@@ -1,0 +1,54 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Navbar</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item" *ngIf="authService.roles=='ADMIN'">
+            <a class="nav-link active" aria-current="page" routerLink="/admin">Admin Panel</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/humor">Humor</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/work">Work</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/break">Break</a>
+          </li>
+        </ul>
+  <ul class="navbar" *ngIf="authService.isAuthenticated==true">
+    <li class="nav-item">
+      <a class="nav-link active">{{this.authService.username}}</a>
+  
+    </li>
+    <li>
+      <button (click)="handleLogout()" class="btn btn-success">Logout</button>
+    </li>
+  </ul>
+      </div>
+    </div>
+  </nav>
+
+<div class="container">
+    <h1 class="title">Gestion du temps de travail</h1>
+  
+    <div class="work-status">
+      <div *ngIf="!isWorking && !isOnBreak" class="status-message">Cliquez pour commencer à travailler</div>
+      <div *ngIf="isWorking && !isOnBreak" class="status-message working">Vous êtes au travail</div>
+      <div *ngIf="isOnBreak" class="status-message break">En pause</div>
+    </div>
+  
+    <div class="controls">
+      <button (click)="toggleWork()" class="btn btn-lg" [class.btn-primary]="!isWorking && !isOnBreak" [class.btn-danger]="isWorking && !isOnBreak" [class.btn-secondary]="isOnBreak">
+        {{ !isWorking && !isOnBreak ? 'Commencer le travail' : isWorking && !isOnBreak ? 'Prendre une pause' : 'Reprendre le travail' }}
+      </button>
+      <button *ngIf="isWorking" (click)="endWork()" class="btn btn-lg btn-warning end-work">Terminer le travail</button>
+    </div>
+  </div>
+  
+  
+  
+  
